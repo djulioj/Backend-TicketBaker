@@ -1,5 +1,6 @@
 const express=require("express");
 const { join } = require("path");
+const cors=require("cors");
 
 const app=express();
 
@@ -8,6 +9,7 @@ app.set("port",process.env.PORT || 3000);
 
 //Middlewares
 app.use(express.json());
+app.use(cors());
 
 //Routes
 app.use("/api/events",require("./Routes/Router"));
