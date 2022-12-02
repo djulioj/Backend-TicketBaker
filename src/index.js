@@ -26,7 +26,7 @@ app.use(cors());
 app.use("/api/events",require("./Routes/Router"));
 
 //Static Files
-app.use(express.static(path.join(__dirname,"Public")));
+app.use(express.static(path.join(__dirname,"../Public")));
 
 app.listen(app.get("port"),()=>{
   console.log("server on port",app.get("port"));
