@@ -18,7 +18,6 @@ const storage=multer.diskStorage({
   }
 });
 app.use(multer({storage}).single("image"));
-app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 app.use(cors());
 
