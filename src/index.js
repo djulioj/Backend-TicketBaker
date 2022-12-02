@@ -5,6 +5,8 @@ const multer=require("multer");
 
 const app=express();
 
+require("./database");
+
 //Settings
 app.set("port",process.env.PORT || 3000);
 
@@ -12,10 +14,10 @@ app.set("port",process.env.PORT || 3000);
 const storage=multer.diskStorage({
   destination: path.join(__dirname,"Public/uploads"),
   filename(req,file,cb){
-    cb(null,new Date().getTime()+path.extname(file.originalname));
+      cb(null,new Date().getTime()+path.extname(file.originalname));
   }
 });
-app.use(multer(storage).single("image"));
+app.use(multer({storage}).single("image"));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 app.use(cors());
@@ -24,9 +26,7 @@ app.use(cors());
 app.use("/api/events",require("./Routes/Router"));
 
 //Static Files
-app.use(express.static(path.join(__dirname,"./Public")));
-
-require("./database");
+app.use(express.static(path.join(__dirname,"Public")));
 
 app.listen(app.get("port"),()=>{
   console.log("server on port",app.get("port"));
