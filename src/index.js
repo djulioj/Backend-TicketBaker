@@ -9,8 +9,6 @@ const app=express();
 app.set("port",process.env.PORT || 3000);
 
 //Middlewares
-app.use(express.json());
-app.use(cors());
 const storage=multer.diskStorage({
   destination: path.join(__dirname,"Public/uploads"),
   filename(req,file,cb){
@@ -19,6 +17,8 @@ const storage=multer.diskStorage({
 });
 app.use(multer(storage).single("image"));
 app.use(express.urlencoded({extended:false}));
+app.use(express.json());
+app.use(cors());
 
 //Routes
 app.use("/api/events",require("./Routes/Router"));
