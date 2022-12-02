@@ -18,6 +18,7 @@ const storage=multer.diskStorage({
   }
 });
 app.use(multer(storage).single("image"));
+app.use(express.urlencoded({extended:false}));
 
 //Routes
 app.use("/api/events",require("./Routes/Router"));
