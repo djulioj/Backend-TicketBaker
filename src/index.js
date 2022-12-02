@@ -1,6 +1,7 @@
 const express=require("express");
-const { join } = require("path");
+const path= require("path");
 const cors=require("cors");
+const multer=require("multer");
 
 const app=express();
 
@@ -10,12 +11,19 @@ app.set("port",process.env.PORT || 3000);
 //Middlewares
 app.use(express.json());
 app.use(cors());
+const storage=multer.diskStorage({
+  destination: path.join(__dirname,"Public/uploads"),
+  filename(req,file,cb){
+    cb(null,new Date().getTime()+path.extname(file.originalname));
+  }
+});
+app.use(multer(storage).single("image"));
 
 //Routes
 app.use("/api/events",require("./Routes/Router"));
 
 //Static Files
-app.use(express.static(join(__dirname,"../public")));
+app.use(express.static(path.join(__dirname,"./Public")));
 
 require("./database");
 
